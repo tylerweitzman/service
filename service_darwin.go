@@ -215,7 +215,7 @@ func (s *darwinLaunchdService) Start() error {
 	if err != nil {
 		return err
 	}
-	return run("launchctl", "load", confPath)
+	return run("launchctl", "load", "-w", confPath)
 }
 func (s *darwinLaunchdService) Stop() error {
 	confPath, err := s.getServiceFilePath()
@@ -288,11 +288,6 @@ var launchdConfig = `<?xml version='1.0' encoding='UTF-8'?>
     <{{bool .RunAtLoad}}/>
     <key>Disabled</key>
     <false/>
-    
-    <key>StandardOutPath</key>
-    <string>/usr/local/var/log/{{html .Name}}.out.log</string>
-    <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/{{html .Name}}.err.log</string>
   
   </dict>
 </plist>
